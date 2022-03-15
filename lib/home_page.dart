@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1;
+  late bool _switchValue;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,6 +44,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _switchValue = false;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -75,28 +79,28 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: Colors.lightBlueAccent,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: height,
+        width: width,
         child: Center(
+            child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                alignment: Alignment.center,
-                height: MediaQuery.of(context).size.height * 0.6,
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _iconDisplays.elementAt(_selectedIndex),
-                      const SizedBox(height: 10.0),
-                      _textDisplays.elementAt(_selectedIndex)
-                    ],
-                  ),
+                alignment: Alignment.bottomCenter,
+                height: height * 0.6,
+                width: width,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 180.0),
+                    _iconDisplays.elementAt(_selectedIndex),
+                    const SizedBox(height: 10.0),
+                    _textDisplays.elementAt(_selectedIndex)
+                  ],
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.2,
-                width: MediaQuery.of(context).size.width,
+                height: height * 0.2,
+                width: width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -106,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                       child: Card(
                         child: Container(
                           // height: MediaQuery.of(context).size.width / 7,
-                          width: MediaQuery.of(context).size.width / 7,
+                          width: width / 7,
                           alignment: Alignment.center,
                           child: const Text("Flag 1"),
                         ),
@@ -116,7 +120,11 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       icon: const Icon(CupertinoIcons.arrow_up_down_circle),
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () => showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => buildSheet()),
                     ),
                     const SizedBox(width: 25.0),
                     Theme(
@@ -125,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                       child: Card(
                         child: Container(
                           // height: 70.0,
-                          width: MediaQuery.of(context).size.width / 7,
+                          width: width / 7,
                           alignment: Alignment.center,
                           child: const Text("Flag 2"),
                         ),
@@ -136,7 +144,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        ),
+        )),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.lightBlue,
@@ -153,5 +161,81 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  Widget buildSheet() {
+    return DraggableScrollableSheet(
+        initialChildSize: 0.95,
+        maxChildSize: 0.95,
+        minChildSize: 0.9,
+        builder: (_, controller) => Container(
+            // Pour rendre les bords arrondis avec un fond blanc
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 40),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                      fillColor: Colors.blue,
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.close)),
+                      hintText: "Rechercher une langue"),
+                ),
+                const SizedBox(height: 10),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.airplanemode_active,
+                            color: Colors.blue,
+                          ),
+                          const SizedBox(width: 10),
+                          const Text(
+                            "Mode hors ligne",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 170),
+                          Switch.adaptive(
+                              value: _switchValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _switchValue = value;
+                                });
+                              })
+                        ],
+                      ),
+                      Container(
+                        child: const Text(
+                          "Toutes les langues",
+                          style: TextStyle(
+                            color: Colors.black54
+                          ),
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 20,
+                        padding: const EdgeInsets.only(left: 10),
+                      ),
+                      
+                    ],
+                  ),
+                )
+              ],
+            )));
   }
 }
