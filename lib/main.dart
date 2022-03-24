@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:speak_and_translate_app/first_open.dart';
 import 'package:speak_and_translate_app/home_page.dart';
 
 void main() {
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         fontFamily: 'Roboto'
       ),
-      home: const HomePage(),
+      home: const FirstOpen(),
+      // const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

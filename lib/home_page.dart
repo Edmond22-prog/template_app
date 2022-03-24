@@ -109,7 +109,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Theme(
                         data: Theme.of(context).copyWith(
-                            cardTheme: const CardTheme(shape: CircleBorder())),
+                            cardTheme: const CardTheme(
+                                shape: CircleBorder())),
                         child: Card(
                           child: Container(
                             width: width / 7,
@@ -174,7 +175,7 @@ class _HomePageState extends State<HomePage> {
           maxChildSize: 0.95,
           minChildSize: 0.9,
           builder: (_, controller) => Container(
-            // Pour rendre les bords arrondis avec un fond blanc
+              // Pour rendre les bords arrondis avec un fond blanc
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -212,33 +213,31 @@ class _HomePageState extends State<HomePage> {
                         ),
                         showLanguages(),
                         Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: MediaQuery.of(context).size.width / 10,
-                                  width: MediaQuery.of(context).size.width / 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(50),
-                                  )
-                                ),
-                                const SizedBox(width: 25.0),
-                                IconButton(
-                                  icon: const Icon(
-                                      CupertinoIcons.arrow_up_down_circle),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                height: MediaQuery.of(context).size.width / 10,
+                                width: MediaQuery.of(context).size.width / 10,
+                                decoration: BoxDecoration(
                                   color: Colors.blue,
-                                  onPressed: () => Navigator.pop(context)
-                                ),
-                                const SizedBox(width: 25.0),
-                                Container(
-                                  height: MediaQuery.of(context).size.width / 10,
-                                  width: MediaQuery.of(context).size.width / 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                ),
-                              ],
+                                  borderRadius: BorderRadius.circular(50),
+                                )),
+                            const SizedBox(width: 25.0),
+                            IconButton(
+                                icon: const Icon(
+                                    CupertinoIcons.arrow_up_down_circle),
+                                color: Colors.blue,
+                                onPressed: () => Navigator.pop(context)),
+                            const SizedBox(width: 25.0),
+                            Container(
+                              height: MediaQuery.of(context).size.width / 10,
+                              width: MediaQuery.of(context).size.width / 10,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
