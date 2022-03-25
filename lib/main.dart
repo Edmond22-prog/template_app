@@ -18,8 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         fontFamily: 'Roboto'
       ),
-      home: const FirstOpen(),
-      // const HomePage(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -107,15 +107,22 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                            cardTheme: const CardTheme(
-                                shape: CircleBorder())),
-                        child: Card(
-                          child: Container(
-                            width: width / 7,
-                            alignment: Alignment.center,
-                            child: const Text("Flag 1"),
+                      Container(
+                        width: width / 7,
+                        height: width / 7,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30),
+                                bottom: Radius.circular(30))),
+                        child: IconButton(
+                          onPressed: () {
+                            print("From FR language");
+                          },
+                          // A remplacer par un drapeau
+                          icon: const Text(
+                            "FR",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -130,17 +137,25 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => buildSheet()),
                       ),
                       const SizedBox(width: 25.0),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                            cardTheme: const CardTheme(shape: CircleBorder())),
-                        child: Card(
-                          child: Container(
-                            width: width / 7,
-                            alignment: Alignment.center,
-                            child: const Text("Flag 2"),
+                      Container(
+                        width: width / 7,
+                        height: width / 7,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30),
+                                bottom: Radius.circular(30))),
+                        child: IconButton(
+                          onPressed: () {
+                            print("To U.S language");
+                          },
+                          // A remplacer par un drapeau
+                          icon: const Text(
+                            "U.S",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -216,12 +231,23 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                height: MediaQuery.of(context).size.width / 10,
-                                width: MediaQuery.of(context).size.width / 10,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(50),
-                                )),
+                              height: MediaQuery.of(context).size.width / 10,
+                              width: MediaQuery.of(context).size.width / 10,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  print("From FR language");
+                                },
+                                // A remplacer par un drapeau
+                                icon: const Text(
+                                  "FR",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
                             const SizedBox(width: 25.0),
                             IconButton(
                                 icon: const Icon(
@@ -235,6 +261,16 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  print("To U.S language");
+                                },
+                                // A remplacer par un drapeau
+                                icon: const Text(
+                                  "U.S",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ],
