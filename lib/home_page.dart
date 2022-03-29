@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'languages.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,10 +11,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Variable qui change en fonction du bouton de navigation choisi
   int _selectedIndex = 1;
+
+  // Variable permettant de changer la vue du body apres un click sur la langue
+  int _onClick = 0;
   int _currentLanguageFromIndex = 0;
   int _currentLanguageToIndex = 0;
 
+  // Procedure qui change la valeur de la variable selon le bouton de navigation
+  // choisi
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -87,20 +94,26 @@ class _HomePageState extends State<HomePage> {
           child: Center(
               child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  height: height * 0.6,
-                  width: width,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 180.0),
-                      _iconDisplays.elementAt(_selectedIndex),
-                      const SizedBox(height: 10.0),
-                      _textDisplays.elementAt(_selectedIndex)
-                    ],
-                  ),
-                ),
+                // Si on n'a pas clique sur un bouton de translation, alors on affiche
+                // cette vue.
+                (_onClick == 0)
+                    ? Container(
+                        alignment: Alignment.bottomCenter,
+                        height: height * 0.6,
+                        width: width,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 180.0),
+                            _iconDisplays.elementAt(_selectedIndex),
+                            const SizedBox(height: 10.0),
+                            _textDisplays.elementAt(_selectedIndex)
+                          ],
+                        ),
+                      )
+                    // Sinon on affiche cette vue
+                    : translationFromTo(_onClick),
                 SizedBox(
                   height: height * 0.2,
                   width: width,
@@ -118,6 +131,9 @@ class _HomePageState extends State<HomePage> {
                         child: IconButton(
                           onPressed: () {
                             print("From FR language");
+                            setState(() {
+                              _onClick = 1;
+                            });
                           },
                           // A remplacer par un drapeau
                           icon: const Text(
@@ -148,6 +164,9 @@ class _HomePageState extends State<HomePage> {
                         child: IconButton(
                           onPressed: () {
                             print("To U.S language");
+                            setState(() {
+                              _onClick = 2;
+                            });
                           },
                           // A remplacer par un drapeau
                           icon: const Text(
@@ -305,4 +324,55 @@ class _HomePageState extends State<HomePage> {
               );
             }));
   }
+
+  Widget translationFromTo(int onClick) => SingleChildScrollView(
+          child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.6,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          crossAxisAlignment: (onClick == 1)
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.end,
+          children: [
+            Container(
+              // Doit s'elargir selon le texte qu'on entre
+              width: MediaQuery.of(context).size.width / 3,
+              height: 30,
+              margin: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              child: TextFormField(
+                style: const TextStyle(color: Colors.lightBlue),
+                cursorColor: Colors.lightBlue,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: (_selectedIndex == 0)
+                  ? const Text(
+                      "Text traduit.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    )
+                  : const Text(
+                      "Voice traduit.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+            )
+          ],
+        ),
+      ));
 }
