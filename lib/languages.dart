@@ -1,18 +1,18 @@
-const Map<String, String> language = {
-  "FR": "Français",
-  "U.S": "Anglais (US)",
-  "GB": "Anglais (GB)",
-  "CHI": "Chinois",
-  "ALL": "Allemand",
-  "ESP": "Espagnol",
-  "JAP": "Japonais",
-  "ITA": "Italien",
-  "RUS": "Russe",
-  "ZOU": "Zoulou",
-  "CAT": "Catalan",
-  "ARA": "Arabe",
-  "CANFR": "Français (CAN)"
-};
+List<Map> languages = [
+  {"FR": "Français"},
+  {"U.S": "Anglais (US)"},
+  {"GB": "Anglais (GB)"},
+  {"CHI": "Chinois"},
+  {"ALL": "Allemand"},
+  {"ESP": "Espagnol"},
+  {"JAP": "Japonais"},
+  {"ITA": "Italien"},
+  {"RUS": "Russe"},
+  {"ZOU": "Zoulou"},
+  {"CAT": "Catalan"},
+  {"ARA": "Arabe"},
+  {"CAN": "Français (CAN)"}
+];
 
 List<String> languageList = <String>[
   "Français",

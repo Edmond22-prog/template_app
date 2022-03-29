@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'languages.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,8 +15,13 @@ class _HomePageState extends State<HomePage> {
 
   // Variable permettant de changer la vue du body apres un click sur la langue
   int _onClick = 0;
+
+  // Variables qui determinent quelles sont les langues choisies pour la traduction
   int _currentLanguageFromIndex = 0;
   int _currentLanguageToIndex = 0;
+
+  // Variable qui determine quel bouton de langue on veut changer sur le bottomsheet
+  int _buttonChange = 0;
 
   // Procedure qui change la valeur de la variable selon le bouton de navigation
   // choisi
@@ -130,15 +134,15 @@ class _HomePageState extends State<HomePage> {
                                 bottom: Radius.circular(30))),
                         child: IconButton(
                           onPressed: () {
-                            print("From FR language");
                             setState(() {
                               _onClick = 1;
                             });
                           },
                           // A remplacer par un drapeau
-                          icon: const Text(
-                            "FR",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          icon: Text(
+                            // Fourni la clé du langage choisit en texte
+                            languages[_currentLanguageFromIndex].keys.first,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -163,7 +167,6 @@ class _HomePageState extends State<HomePage> {
                                 bottom: Radius.circular(30))),
                         child: IconButton(
                           onPressed: () {
-                            print("To U.S language");
                             setState(() {
                               _onClick = 2;
                             });
@@ -250,8 +253,8 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              height: MediaQuery.of(context).size.width / 10,
-                              width: MediaQuery.of(context).size.width / 10,
+                              height: MediaQuery.of(context).size.width / 9,
+                              width: MediaQuery.of(context).size.width / 9,
                               decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(50),
@@ -261,9 +264,13 @@ class _HomePageState extends State<HomePage> {
                                   print("From FR language");
                                 },
                                 // A remplacer par un drapeau
-                                icon: const Text(
-                                  "FR",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                icon: Text(
+                                  // Fourni la clé du langage choisit en texte
+                                  languages[_currentLanguageFromIndex]
+                                      .keys
+                                      .first,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -275,8 +282,8 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () => Navigator.pop(context)),
                             const SizedBox(width: 25.0),
                             Container(
-                              height: MediaQuery.of(context).size.width / 10,
-                              width: MediaQuery.of(context).size.width / 10,
+                              height: MediaQuery.of(context).size.width / 9,
+                              width: MediaQuery.of(context).size.width / 9,
                               decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(50),
@@ -298,19 +305,22 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )
                 ],
-              ))),
+              )
+          )),
     );
   }
 
   Widget showLanguages() {
-    languageList.sort((a, b) => a.compareTo(b));
+    // languageList.sort((a, b) => a.compareTo(b));
+    languages.sort((a, b) =>
+        a.values.first.toString().compareTo(b.values.first.toString()));
     return SizedBox(
         height: MediaQuery.of(context).size.height * 0.7,
         child: ListView.builder(
-            itemCount: languageList.length,
+            itemCount: languages.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                title: Text(languageList[index],
+                title: Text(languages[index].values.first,
                     style: (_currentLanguageFromIndex == index)
                         ? const TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold)
